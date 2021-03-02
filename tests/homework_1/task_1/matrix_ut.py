@@ -103,12 +103,7 @@ class MatrixTest(unittest.TestCase):
                 [4, 5, 6],
             ]
         )
-        matrix_2 = Matrix(
-            [
-                [1, 4, 7],
-                [2, 5, 8]
-            ]
-        )
+        matrix_2 = Matrix([[1, 4, 7], [2, 5, 8]])
         with self.assertRaises(ValueError):
             matrix_1 * matrix_2
 
@@ -126,11 +121,6 @@ class MatrixTest(unittest.TestCase):
                 [3.5, -6.2],
             ]
         )
-        right_answer = Matrix(
-            [
-                [11.857, -6.889],
-                [18.84, -64.74]
-            ]
-        )
+        right_answer = Matrix([[11.857, -6.889], [18.84, -64.74]])
 
         self.assertEqual(matrix_1 * matrix_2, right_answer)
