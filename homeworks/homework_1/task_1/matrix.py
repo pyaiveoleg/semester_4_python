@@ -19,7 +19,7 @@ class Matrix:
         self.__columns = len(matrix[0])
         self.__matrix = matrix
 
-    def __eq__(self, other: "Matrix") -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Matrix):
             return NotImplemented
 
