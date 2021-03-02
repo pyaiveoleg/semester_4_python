@@ -21,7 +21,7 @@ class Matrix:
 
     def __eq__(self, other: "Matrix") -> bool:
         if not isinstance(other, Matrix):
-            return False
+            return NotImplemented
 
         for i in range(self.__rows):
             for j in range(self.__columns):
