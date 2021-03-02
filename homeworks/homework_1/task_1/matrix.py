@@ -20,6 +20,9 @@ class Matrix:
         self.__matrix = matrix
 
     def __eq__(self, other: "Matrix") -> bool:
+        if not isinstance(other, Matrix):
+            return False
+
         for i in range(self.__rows):
             for j in range(self.__columns):
                 if (self.__matrix[i][j] - other.__matrix[i][j]) > self.eps:
