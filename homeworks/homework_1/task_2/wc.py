@@ -12,7 +12,7 @@ def print_wordstats(file_names: List[str]):
                 lines, words = 0, 0
                 for line in f:
                     lines += 1
-                    words = len(line.split())
+                    words += len(line.split())
 
                 total_lines += lines
                 total_words += words
