@@ -16,6 +16,7 @@ def print_tail(file_names: List[str], rows_number: int = 10):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("files", metavar="", type=str, nargs="+", help="List of files")
+    parser.add_argument("-n", type=int, help="Quantity of lines", default=10)
+    parser.add_argument("files", type=str, nargs="+", help="List of files")
     args = parser.parse_args()
-    print_tail(args.files)
+    print_tail(args.files, args.n)
