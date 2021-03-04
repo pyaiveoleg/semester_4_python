@@ -4,8 +4,9 @@ from homeworks.homework_1.task_1.vector import Vector
 
 
 class VectorTest(unittest.TestCase):
-    def test_zero_length(self):
-        self.assertEqual(Vector([]).length(), 0)
+    def test_empty_vector(self):
+        with self.assertRaises(ValueError):
+            self.assertEqual(Vector([]).length(), 0)
 
     def test_int_length(self):
         self.assertEqual(Vector([3, 4]).length(), 5)
