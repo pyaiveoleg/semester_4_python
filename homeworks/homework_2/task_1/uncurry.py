@@ -10,6 +10,8 @@ def uncurry_explicit(func: Callable, arity: int) -> Callable:
     Transforms function that takes arguments sequentially to function from several arguments, for example:
     f(a)(b)(c)(d) -> f(a, b, c, d)
     """
+    if arity == 0:
+        return func
 
     def uncurried_function(*args):
         res = func
