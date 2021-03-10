@@ -68,7 +68,7 @@ class CurryTest(unittest.TestCase):
             curry_explicit(fun_with_one_argument, 1)("1")("2")
 
     def test_zero_arguments_more_args_than_arity(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             curry_explicit(fun_with_no_argument, 0)("1")("2")
 
     def test_two_sequential_function_call(self):
@@ -76,3 +76,15 @@ class CurryTest(unittest.TestCase):
         f2 = f1("10")("20")
         f1("5")("15")("25")("35")  # call this, if we try to call this function another time, we'll get error
         self.assertEqual(f2("30")("40"), "10 20 30 40")  # no mistake -> we call another instance of function
+
+    def test_n(self):
+        f0 = curry_explicit(lambda *xs: print(xs), 0)
+        f0()  # there aren't any error
+
+    def test_more_args_than_arity_zero(self):
+        with self.assertRaises(ValueError):
+            curry_explicit(lambda *xs: print(xs), 0)(1)
+    
+    def call_of_already_called_fun(self):
+        with self.assertRaises(ValueError):
+            curry_explicit(lambda *xs: print(xs), 0)()()
