@@ -84,7 +84,7 @@ class CurryTest(unittest.TestCase):
     def test_more_args_than_arity_zero(self):
         with self.assertRaises(ValueError):
             curry_explicit(lambda *xs: print(xs), 0)(1)
-    
+
     def call_of_already_called_fun(self):
         with self.assertRaises(ValueError):
             curry_explicit(lambda *xs: print(xs), 0)()()
