@@ -61,5 +61,5 @@ class UncurryTest(unittest.TestCase):
             uncurry_explicit(fun_with_one_argument_curried, 1)("1", "2")
 
     def test_zero_arguments_more_args_than_arity(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             uncurry_explicit(fun_with_no_argument_curried, 0)("1", "2")
