@@ -22,20 +22,22 @@ def fun_with_infinity_arguments(*args):
 
 class CurryTest(unittest.TestCase):
     def test_zero_arguments(self):
-        return self.assertEqual(curry_explicit(fun_with_no_argument, 0)(), "Я пока ничего не умею...")
+        return self.assertEqual(curry_explicit(fun_with_no_argument, 0)(), fun_with_no_argument())
 
     def test_one_argument(self):
-        return self.assertEqual(curry_explicit(fun_with_one_argument, 1)("str"), "I'm taking 1 argument")
+        return self.assertEqual(curry_explicit(fun_with_one_argument, 1)("str"), fun_with_one_argument("str"))
 
     def test_several_arguments(self):
         f2 = curry_explicit(fun_with_several_arguments, 3)
-        return self.assertEqual(f2(123)(456)(789), "<123, 456, 789>")
+        return self.assertEqual(f2("123")("456")("789"), fun_with_several_arguments("123", "456", "789"))
 
     def test_infinity_arguments_arity1(self):
-        return self.assertEqual(curry_explicit(fun_with_infinity_arguments, 1)("1"), "1")
+        return self.assertEqual(curry_explicit(fun_with_infinity_arguments, 1)("1"), fun_with_infinity_arguments("1"))
 
     def test_infinity_arguments_arity3(self):
-        return self.assertEqual(curry_explicit(fun_with_infinity_arguments, 3)("1")("2")("3"), "123")
+        return self.assertEqual(
+            curry_explicit(fun_with_infinity_arguments, 3)("1")("2")("3"), fun_with_infinity_arguments("1", "2", "3")
+        )
 
     # block of incorrect cases
 
@@ -52,12 +54,11 @@ class CurryTest(unittest.TestCase):
             curry_explicit(fun_with_infinity_arguments, 1)("1")("2")
 
     def test_several_arguments_more_args_than_arity(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             curry_explicit(fun_with_several_arguments, 1)("1")("2")
 
     def test_several_arguments_less_args_than_arity(self):
-        with self.assertRaises(ValueError):
-            curry_explicit(fun_with_several_arguments, 1)("1")("2")
+        self.assert_(isinstance(curry_explicit(fun_with_several_arguments, 3)("1")("2"), Callable))
 
     def test_one_argument_less_args_than_arity(self):
         self.assert_(isinstance(curry_explicit(fun_with_one_argument, 1), Callable))
@@ -69,3 +70,9 @@ class CurryTest(unittest.TestCase):
     def test_zero_arguments_more_args_than_arity(self):
         with self.assertRaises(TypeError):
             curry_explicit(fun_with_no_argument, 0)("1")("2")
+
+    def test_two_sequential_function_call(self):
+        f1 = curry_explicit(lambda *args: " ".join(args), 4)
+        f2 = f1("10")("20")
+        f1("5")("15")("25")("35")  # call this, if we try to call this function another time, we'll get error
+        self.assertEqual(f2("30")("40"), "10 20 30 40")  # no mistake -> we call another instance of function

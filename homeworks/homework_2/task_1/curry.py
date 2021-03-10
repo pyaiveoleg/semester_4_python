@@ -12,21 +12,10 @@ def curry_explicit(func: Callable, arity: int) -> Callable:
     """
     if arity == 0:
         return func
-    remaining_curry_level = arity
-    args = []
 
-    def curried_function(arg):
-        args.append(arg)
-        nonlocal remaining_curry_level
-        if remaining_curry_level == 1:
-            try:
-                res = func(*args)
-                del args[:]
-                remaining_curry_level = arity
-                return res
-            except Exception:
-                raise ValueError("Incorrect arity for this function")
-        remaining_curry_level -= 1
-        return curried_function
+    def inner_fun(*args) -> Callable:
+        if len(args) == arity:
+            return func(*args)
+        return lambda arg: inner_fun(*args, arg)  # we add one argument with each function call
 
-    return curried_function
+    return inner_fun()
