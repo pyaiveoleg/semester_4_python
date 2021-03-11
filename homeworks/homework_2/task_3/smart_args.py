@@ -36,7 +36,7 @@ def smart_args(function: Callable = None, positional_arguments_included: bool = 
                             kwargs[name] = default()
 
         if a.kwonlydefaults is not None:
-            for name in a.kwonlyargs[-len(a.kwonlydefaults):]:
+            for name in a.kwonlyargs[-len(a.kwonlydefaults) :]:
                 default = a.kwonlydefaults[name]
                 if isinstance(default, Isolated):
                     kwargs[name] = deepcopy(kwargs[name])
@@ -45,6 +45,7 @@ def smart_args(function: Callable = None, positional_arguments_included: bool = 
                         kwargs[name] = default()
 
         return function(*args, **kwargs)
+
     return inner
 
 
