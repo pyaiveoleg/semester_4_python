@@ -59,6 +59,8 @@ class Isolated:
 
 class Evaluated:
     def __init__(self, function: Callable):
+        if isinstance(function, Isolated):
+            raise ValueError("Isolated cannot be used with Evaluated")
         self._function = function
 
     def __call__(self, *args, **kwargs):
