@@ -228,7 +228,7 @@ class TestEvaluated(unittest.TestCase):
             *,
             second,
             y: Any = Evaluated(function_to_evaluate),
-            third=None
+            third=None,
         ):
             return x, y
 
@@ -287,7 +287,7 @@ class TestEvaluated(unittest.TestCase):
             *,
             second,
             y: Any = Evaluated(function_to_evaluate),
-            third=None
+            third=None,
         ):
             return x, y
 
@@ -299,3 +299,22 @@ class TestEvaluated(unittest.TestCase):
             return first, second
 
         self.assertEqual(check_evaluation(4, second=2), (4, 2))
+
+    def test_positional_non_defined_defaults_after_isolated(self):
+        @smart_args(positional_arguments_included=True)
+        def support_positionals(x=Isolated(), y=5, /):
+            x[0] += 1
+            return x, y
+
+        X = [0]
+        self.assertEqual(support_positionals(X, 5), ([1], 5))
+        self.assertEqual(support_positionals(X), ([1], 5))
+
+    def test_posotional_evaluated_posonly(self):
+        @smart_args(positional_arguments_included=True)
+        def support_positionals(x, y=Evaluated(lambda: 123), /):
+            x[0] += 1
+            return x, y
+
+        X = [0]
+        self.assertEqual(support_positionals(X), ([1], 123))
