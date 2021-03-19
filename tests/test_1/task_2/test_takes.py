@@ -54,3 +54,13 @@ class TestTakes(unittest.TestCase):
         result = test_func("5", par2="6", par3="7")  # it actually relaunches
         result = test_func("5", par2="6", par3=7)
         self.assertEqual(7, result)
+
+    def test_are_defaults(self):
+        with self.assertRaises(TypeError):
+
+            @takes(str, str)
+            def test_func(par1, /, par2=None, *, par3):
+                return par3
+
+            result = test_func("5", par3=7)
+            self.assertEqual(7, result)
