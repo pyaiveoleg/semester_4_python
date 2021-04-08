@@ -24,13 +24,12 @@ class CartesianTree(MutableMapping):
         """
         Add pair of key-value to tree
         """
+        if self.root is None:
+            self.root = Node(key, value)
         if key in self:
             self.root.update(key, value)
         else:
-            if self.root is None:
-                self.root = Node(key, value)
-            else:
-                self.root = self.root.insert(key, value)
+            self.root = self.root.insert(key, value)
             self.size += 1
 
     def __delitem__(self, key) -> None:
