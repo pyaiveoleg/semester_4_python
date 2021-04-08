@@ -43,7 +43,7 @@ class NodeTest(unittest.TestCase):
 
     def test_insert_both_children(self):
         with open(self.answers_folder / "complicated_tree.json") as answer_file:
-            self.assertEqual(json.loads(answer_file.read(), cls=Node.NodeJSONDecoder), complicated_node())
+            self.assertEqual(json.loads(answer_file.read(), cls=Node.NodeJSONDecoder), self.complicated_node())
 
     def test_update(self):
         node = self.complicated_node()
