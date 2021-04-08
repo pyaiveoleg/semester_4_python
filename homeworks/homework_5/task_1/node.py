@@ -158,6 +158,7 @@ class Node:
         """
         JSON serializer for Node class
         """
+
         def default(self, obj):
             if isinstance(obj, Node):
                 return obj.__dict__
@@ -167,5 +168,6 @@ class Node:
         """
         Deserializer from JSON representation
         """
+
         def __init__(self, *args, **kwargs):
             JSONDecoder.__init__(self, object_hook=lambda dct: Node(**dct), *args, **kwargs)
