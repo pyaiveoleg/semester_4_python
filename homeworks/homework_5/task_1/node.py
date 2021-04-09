@@ -127,13 +127,13 @@ class Node:
             result = self
             result.right_child = left_child
             return result, right_child
-        else:
-            if self.left_child is None:
-                return None, self
-            left_child, right_child = self.left_child.__split(key)
-            result = self
-            result.left_child = right_child
-            return left_child, result
+        if self.left_child is None:
+            return None, self
+
+        left_child, right_child = self.left_child.__split(key)
+        result = self
+        result.left_child = right_child
+        return left_child, result
 
     def __merge(self, other: Optional["Node"]) -> "Node":
         if other is None:
@@ -146,13 +146,13 @@ class Node:
             else:
                 result.right_child = self.right_child.__merge(other)
             return result
+
+        result = other
+        if other.left_child is None:
+            result.left_child = self
         else:
-            result = other
-            if other.left_child is None:
-                result.left_child = self
-            else:
-                result.left_child = self.__merge(other.left_child)
-            return result
+            result.left_child = self.__merge(other.left_child)
+        return result
 
     class NodeJSONEncoder(JSONEncoder):
         """

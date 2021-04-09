@@ -1,11 +1,14 @@
 import json
 import unittest
 from pathlib import Path
+from typing import TextIO
 
 from homeworks.homework_5.task_1.node import Node
 
 
 class NodeTest(unittest.TestCase):
+    answers_folder = Path("tests/homework_5/task_1/answers")
+
     @staticmethod
     def complicated_node() -> Node:
         node = Node(1, "val1", 5)
@@ -17,7 +20,9 @@ class NodeTest(unittest.TestCase):
         node = node.insert(7, 0.1, 3)
         return node
 
-    answers_folder = Path("tests/homework_5/task_1/answers")
+    @staticmethod
+    def read_answer(answer_file: TextIO) -> Node:
+        return json.loads(answer_file.read(), cls=Node.NodeJSONDecoder)
 
     def test_contains_key_not_in_node(self):
         node = self.complicated_node()
@@ -29,21 +34,22 @@ class NodeTest(unittest.TestCase):
 
     def test_insert_no_children(self):
         with open(self.answers_folder / "no_children.json") as answer_file:
-            self.assertEqual(json.loads(answer_file.read(), cls=Node.NodeJSONDecoder), Node(1, "value", 1))
+            print(type(answer_file))
+            self.assertEqual(self.read_answer(answer_file), Node(1, "value", 1))
 
     def test_insert_only_left_child(self):
         root = Node(1, 0, 1).insert(0, 0, 0)
         with open(self.answers_folder / "only_left_child.json") as answer_file:
-            self.assertEqual(json.loads(answer_file.read(), cls=Node.NodeJSONDecoder), root)
+            self.assertEqual(self.read_answer(answer_file), root)
 
     def test_insert_only_right_child(self):
         root = Node(0, 0, 0).insert(-1, 0, 1)
         with open(self.answers_folder / "only_right_child.json") as answer_file:
-            self.assertEqual(json.loads(answer_file.read(), cls=Node.NodeJSONDecoder), root)
+            self.assertEqual(self.read_answer(answer_file), root)
 
     def test_insert_both_children(self):
         with open(self.answers_folder / "complicated_tree.json") as answer_file:
-            self.assertEqual(json.loads(answer_file.read(), cls=Node.NodeJSONDecoder), self.complicated_node())
+            self.assertEqual(self.read_answer(answer_file), self.complicated_node())
 
     def test_update(self):
         node = self.complicated_node()

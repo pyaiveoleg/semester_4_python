@@ -50,8 +50,7 @@ class CartesianTree(MutableMapping):
         """
         if self.root is None:
             return
-        else:
-            yield from self.root
+        yield from self.root
 
     def __reversed__(self) -> Iterator[Any]:
         """
@@ -59,8 +58,7 @@ class CartesianTree(MutableMapping):
         """
         if self.root is None:
             return
-        else:
-            yield from reversed(self.root)
+        yield from reversed(self.root)
 
     # Checking key with 'in' operator
     def __contains__(self, key) -> bool:
