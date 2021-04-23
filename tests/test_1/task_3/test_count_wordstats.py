@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 from control_works.test_1.task_3.count_wordstats import count_top_10_words, count_sentences
 
 
@@ -34,5 +35,5 @@ class TestCountSentences(unittest.TestCase):
         self.assertEqual(count_sentences("blabla"), 0)
 
     def test_big_text(self):
-        with open("resources/big_text_file.txt") as input_file:
+        with open(Path() / "tests" / "test_1" / "task_3" / "resources" / "big_text_file.txt") as input_file:
             self.assertEqual(count_sentences(input_file.read()), 19)
