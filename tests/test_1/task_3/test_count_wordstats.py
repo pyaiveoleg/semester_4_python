@@ -18,7 +18,7 @@ class TestCountTopWords(unittest.TestCase):
 
     def test_with_digits(self):
         self.assertEqual(count_top_10_words("abcd, ab2cd1, cdbs"), ["abcd", "ab", "cd", "cdbs"])
-
+ 
     def test_more_10_different_words(self):
         with open(Path() / "tests" / "test_1" / "task_3" / "resources" / "big_text_file.txt") as input_file:
             self.assertEqual(
