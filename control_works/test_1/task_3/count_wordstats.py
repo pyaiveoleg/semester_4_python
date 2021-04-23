@@ -21,5 +21,5 @@ def count_sentences(string: str) -> int:
     """
     Counts quantity of sentences in given text.
     """
-    sentence_endings = re.compile(".*[.!?].*")
+    sentence_endings = re.compile("[.!?]+")
     return len(sentence_endings.findall(string))
