@@ -24,7 +24,7 @@ class Semaphore:
             self.size += 1
             self.condition.notify()
 
-    @contracts.pre(lambda x: x >= 0, message="Negative initial size is illegal.")
+    @contracts.pre(lambda cls, x: x >= 0, message="Negative initial size is illegal.")
     def set_size(self, initial_size: int = 1) -> None:
         """
         Sets max quantity of threads that can use common resource
