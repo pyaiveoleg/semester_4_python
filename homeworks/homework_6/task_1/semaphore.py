@@ -2,6 +2,9 @@ from threading import Condition
 import contracts
 
 
+contracts.CONTRACTS_ENABLED = True
+
+
 class Semaphore:
     """
     Class used to control access to a common resource by multiple processes and avoid critical section problems
